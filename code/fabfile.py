@@ -8,7 +8,7 @@ from fabric.api import task
 env.application_name = 'spikes_build'
 env.deployment_directory = '/opt'
 env.build_directory = 'build'
-env.source_code_directory = 'code_from_git'
+# env.source_code_directory = 'code_from_git'
 
 
 @task
@@ -49,8 +49,8 @@ def get_source_code():
     """
     Call git and get the source code
     """
-    run('mkdir -p {0}'.format(env.source_code_directory))
-    # run('git clone https://github.com/eduardoshanahan/spikes_build')
+    # run('mkdir -p {0}'.format(env.source_code_directory))
+    run('git clone https://github.com/eduardoshanahan/spikes_build')
 
 @task
 def build():
