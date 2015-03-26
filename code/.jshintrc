@@ -1,0 +1,37 @@
+{
+    // Standard browser globals e.g. 'window', 'document'
+    //"browser" : false,
+
+    // Standard NodeJs globals e.g. 'require', 'process', 'console'
+    "node" : true,
+
+    // jQuery globals
+    //"jquery" : false,
+
+    // Custom globals
+    "predef" : [
+    ],
+     
+
+    // --- Development --- //
+    "debug" : false, // Allow debugger statements e.g. browser breakpoints
+    "devel" : true, // Allow developments statements e.g. 'console.log();'
+
+    // --- Styling --- //
+    "indent" : 2, // Specify indentation spacing
+
+    // --- Enforce strict guidelines --- //
+    "esnext" : true, // ES6 support e.g. 'const', 'let', etc.
+    "bitwise" : true, // Prohibit bitwise operators (&, |, ^, etc.).
+    "curly" : true, // Require {} for every new block or scope.
+    "eqeqeq" : true, // Require triple equals i.e. `===`.
+    "immed" : true, // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
+    "latedef" : true, // Prohibit variable use before definition.
+    "newcap" : true, // Require capitalization of all constructor functions e.g. `new F()`.
+    "noarg" : true, // Prohibit use of `arguments.caller` and `arguments.callee`.
+    "noempty" : true, // Prohibit use of empty blocks.
+    "nonew" : true, // Prohibit use of constructors for side-effects.
+    "undef" : true, // Require all non-global variables be declared before they are used.
+    "strict" : true, // Require `use strict` pragma in every file.
+    "trailing" : true // Prohibit trailing whitespaces. 
+}

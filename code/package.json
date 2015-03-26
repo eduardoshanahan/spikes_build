@@ -1,0 +1,15 @@
+{
+  "name": "server-daemon",
+  "version": "0.1.0",
+  "description": "A daemon around a server",
+  "main": "lib/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node lib/server.js"
+  },
+  "author": "Eduardo Shanahan",
+  "license": "ISC",
+  "dependencies": {
+    "daemon": "^1.1.0"
+  }
+}
