@@ -11,7 +11,7 @@ env.repositories = [
 @task
 def git_clone():
     """
-    Clone the examples and resources
+    Clone resources
     """
     for repository in env.repositories:
         with warn_only():
@@ -21,7 +21,7 @@ def git_clone():
 @task
 def git_pull():
     """
-    Pull examples and resources
+    Pull resources
     """
     for repository in env.repositories:
         with lcd(repository[1]):

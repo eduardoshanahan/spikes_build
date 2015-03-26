@@ -1,12 +1,14 @@
 # Spike Build
 
-How to build and deploy using a script
+How to build and deploy using a script.
+
+Note: I would prefer to use a build and deployment server, but this will do the trick to run a build from the command line.
 
 ## Requirements
 
-Python Fabric
-Vagrant
-Git
+* Python Fabric
+* Vagrant
+* Git
 
 To be able to run the example the first step after getting the source code is to get the Fabric scripts resources from Github:
 ```
