@@ -21,4 +21,4 @@ node_modules
 # Python
 *.pyc
 
-vcs_resources
+git_resources
