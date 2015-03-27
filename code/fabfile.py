@@ -56,7 +56,8 @@ def get_source_code():
     """
     with settings(warn_only=True):
         run('git clone https://github.com/eduardoshanahan/spikes_build')
-        run('git pull')
+        with cd('spikes_build'):
+            run('git pull')
 
 
 @task

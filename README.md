@@ -39,5 +39,5 @@ fab at_vagrant get_build deploy configure
 
 All in one line:
 ```
-fab at_vagrant get_source_code build get_build deploy configure
+fab at_vagrant cleanup get_source_code build get_build deploy configure start
 ```
