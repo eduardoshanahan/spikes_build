@@ -32,7 +32,12 @@ The build itself will be:
 fab at_vagrant build
 ```
 
+Now grab the build from the build machine and pass it to production
+```
+fab at_vagrant get_build deploy configure
+```
+
 All in one line:
 ```
-fab at_vagrant get_source_code build
+fab at_vagrant get_source_code build get_build deploy configure
 ```

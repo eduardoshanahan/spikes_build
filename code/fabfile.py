@@ -8,6 +8,7 @@ from fabric.api import run
 from fabric.api import sudo
 from fabric.api import task
 import datetime
+import os
 
 env.application_name = 'spikes_build'
 env.deployment_directory = '/opt'
@@ -30,7 +31,7 @@ def list_processes():
     """
     List each process running in parallel
     """
-    run("ps -axf | grep [s]erver-daemon | awk '{ print \"pid:\"$2\", parent-pid:\"$3 }'")
+    run("ps axo ppid,pid,command | grep [s]erver-daemon")
 
 
 @task
@@ -87,17 +88,40 @@ def deploy():
     """
     Drop all the artifacts in the deployment directory
     """
-    with cd(env.deployment_directory):
-        sudo('mkdir -p {0}'.format(env.application_name))
-        with cd(env.application_name):
-            with lcd(env.build_directory):
-                put('node_modules', './', use_sudo=True)
-                put('bin', './', use_sudo=True)
-                put('lib', './', use_sudo=True)
-                with lcd('configuration'):
-                    with lcd (env.application_name):
-                        put('etc', '/', use_sudo=True)
+    destination = os.path.join(env.deployment_directory, env.application_name)
+    sudo('mkdir -p {0}'.format(destination))
+    with lcd(env.build_directory):
+        put('node_modules', destination, use_sudo=True)
+        put('bin', destination, use_sudo=True)
+        put('lib', destination, use_sudo=True)
 
+@task
+def configure():
+    """
+    Pass files for upstart
+    """
+    origin = os.path.join(env.build_directory, 'configuration', env.application_name)
+    with lcd(origin):
+        put('etc', '/', use_sudo=True)
+    # prepare_daemons()
+
+
+# @task
+# def prepare_daemons():
+#     """
+#     Make the daemons executable
+#     """
+#     destination = os.path.join(env.deployment_directory, env.application_name, 'bin')
+#     with cd(destination):
+#         sudo('chmod +x server-daemon')
+
+@task
+def start():
+    """
+    Start the daemons
+    """
+    sudo('start server-daemon')
+    
 
 @task
 def cleanup():
