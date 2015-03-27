@@ -5,6 +5,7 @@ from fabric.api import lcd
 from fabric.api import local
 from fabric.api import put
 from fabric.api import run
+from fabric.api import settings
 from fabric.api import sudo
 from fabric.api import task
 import datetime
@@ -53,7 +54,9 @@ def get_source_code():
     """
     Call git and get the source code
     """
-    run('git clone https://github.com/eduardoshanahan/spikes_build')
+    with settings(warn_only=True):
+        run('git clone https://github.com/eduardoshanahan/spikes_build')
+        run('git pull')
 
 
 @task
@@ -63,9 +66,9 @@ def build():
     """
     with cd(env.application_name), cd (env.application_code_directory):
         run('npm install')
-        version = 'build_{0}'.format(datetime.datetime.now().strftime('%Y-%m-%d-%H-%M'))
-        run('git tag {0}'.format(version))
-        run('git push origin {0}'.format(version))
+        # version = 'build_{0}'.format(datetime.datetime.now().strftime('%Y-%m-%d-%H-%M'))
+        # run('git tag {0}'.format(version))
+        # run('git push origin {0}'.format(version))
 
 
 @task
@@ -121,7 +124,7 @@ def start():
     Start the daemons
     """
     sudo('start server-daemon')
-    
+
 
 @task
 def cleanup():
