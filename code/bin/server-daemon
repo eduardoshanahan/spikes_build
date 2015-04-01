@@ -1,12 +1,7 @@
 #!/usr/bin/env node
 
 // Everything above this line will be executed twice
-require('daemon')(
-  {
-    stdout: "./daemon.out",
-    stderr: "./daemon.err.out"
-  }
-  );
+require('daemon')();
 
 var cluster = require('cluster');
 
