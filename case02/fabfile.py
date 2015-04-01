@@ -67,7 +67,7 @@ def build(code_directory=env.application_code_directory):
     Prepare binaries (you can add :code_directory=/vagrant/)
     """
     with cd(env.application_name), cd (code_directory):
-        run('npm install')
+        sudo('npm install')
         # version = 'build_{0}'.format(datetime.datetime.now().strftime('%Y-%m-%d-%H-%M'))
         # run('git tag {0}'.format(version))
         # run('git push origin {0}'.format(version))
