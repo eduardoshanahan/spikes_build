@@ -10,7 +10,7 @@ var server = http.createServer(function (req, res) {
 
 server.listen(PORT, ADDRESS, function () {
     console.log('Server running at http://%s:%d/', ADDRESS, PORT);
-    console.lot('Press CTRL+C to exit');
+    console.log('Press CTRL+C to exit');
 
     // Check if we are running as root
     // if (process.getgid() === 0) {
