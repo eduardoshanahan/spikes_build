@@ -1,9 +1,6 @@
 const PORT = 80;
 const ADDRESS = '0.0.0.0';
 
-const Logger = require('./logger');
-const logger = new Logger('buildServer');
-
 var http = require('http');
 
 var server = http.createServer(function (req, res) {
@@ -12,14 +9,14 @@ var server = http.createServer(function (req, res) {
 });
 
 server.listen(PORT, ADDRESS, function () {
-    logger.info('Server running at http://%s:%d/', ADDRESS, PORT);
-    logger.info('Press CTRL+C to exit');
+    console.log('Server running at http://%s:%d/', ADDRESS, PORT);
+    console.lot('Press CTRL+C to exit');
 
     // Check if we are running as root
-    if (process.getgid() === 0) {
-      process.setgid('nobody');
-      process.setuid('nobody');
-    }
+    // if (process.getgid() === 0) {
+    //   process.setgid('nobody');
+    //   process.setuid('nobody');
+    // }
 });
 
 process.on('SIGTERM', function () {
