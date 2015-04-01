@@ -10,5 +10,6 @@
   "author": "Eduardo Shanahan",
   "license": "ISC",
   "dependencies": {
+    "bunyan": "^1.3.4"
   }
 }

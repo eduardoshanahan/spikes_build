@@ -82,7 +82,7 @@ def get_build(code_directory=env.application_code_directory):
     local('mkdir -p {0}'.format(env.build_directory))
     with lcd(env.build_directory):
         with cd(env.application_name), cd (code_directory):
-            # get('node_modules', './')
+            get('node_modules', './')
             get('lib', './')
             get('configuration', './')
 
@@ -95,7 +95,7 @@ def deploy():
     destination = os.path.join(env.deployment_directory, env.application_name)
     sudo('mkdir -p {0}'.format(destination))
     with lcd(env.build_directory):
-        # put('node_modules', destination, use_sudo=True)
+        put('node_modules', destination, use_sudo=True)
         put('lib', destination, use_sudo=True)
 
 @task
