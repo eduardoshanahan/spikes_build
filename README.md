@@ -41,3 +41,7 @@ All in one line:
 ```
 fab at_vagrant cleanup get_source_code build get_build deploy configure start
 ```
+
+## Notes
+
+There is an interesting article at [hashbangcode](http://www.hashbangcode.com/blog/connecting-vagrant-box-without-vagrant-ssh-command)

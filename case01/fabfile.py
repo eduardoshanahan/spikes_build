@@ -1,5 +1,6 @@
 from fabric.api import cd
 from fabric.api import env
+from fabric.api import execute
 from fabric.api import get
 from fabric.api import lcd
 from fabric.api import local
@@ -10,21 +11,51 @@ from fabric.api import sudo
 from fabric.api import task
 import datetime
 import os
+import yaml
 
 env.application_name = 'spikes_build'
 env.deployment_directory = '/opt'
 env.application_code_directory = 'code'
 env.build_directory = 'build'
+env.server_build = ''
+env.server_production = ''
+
 
 @task
-def at_vagrant():
+def load_vagrant_config():
+    stream = file('vagrant_config.yaml', 'r')   
+    loaded = yaml.load(stream)
+    env.server_build = loaded['build']
+    env.server_production = loaded['production']
+    print('Build: {0}'.format(env.server_build))
+    print('Production: {0}'.format(env.server_production))
+
+
+@task
+def vagrant_build():
+    """
+    Connect to the vagrant build server
+    """
+    at_vagrant(env.server_build['ssh_port'])
+
+
+@task
+def vagrant_production():
+    """
+    Connect to the vagrant build server
+    """
+    at_vagrant(env.server_production['ssh_port'])
+
+
+# @task
+def at_vagrant(port=''):
     """
     Connect with Vagrant
     """
     import sys
     sys.path.insert(0, '../git_resources/')
     from fabric_scripts.scripts import vagrant
-    vagrant.connect()
+    vagrant.connect(port)
 
 
 @task
@@ -85,6 +116,7 @@ def build_and_tag():
     """
     Build and tag in one go
     """
+    get_source_code()
     build()
     tag()
 
@@ -128,6 +160,20 @@ def configure():
     # prepare_daemons()
 
 
+@task
+def vagrant_full_cycle():
+    """
+    Build in one machine, deploy into another
+    """
+    load_vagrant_config()
+    vagrant_build()
+    get_source_code()
+    # build()
+    # get_build()
+    # vagrant_production()
+    # deploy()
+
+
 # @task
 # def prepare_daemons():
 #     """
@@ -151,3 +197,6 @@ def cleanup():
     Remove temporary directories
     """
     local('rm -rf {0}'.format(env.build_directory))
+
+
+

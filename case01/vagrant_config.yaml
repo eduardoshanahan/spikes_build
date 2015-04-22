@@ -1,0 +1,10 @@
+build:
+  ip: '192.168.1.10'
+  name: 'SpikesBuildBuild'
+  ssh_port: 2210
+  memory: '512'
+production:
+  ip: '192.168.1.11'
+  name: 'SpikesBuildProduction'
+  ssh_port: 2211
+  memory: '512'

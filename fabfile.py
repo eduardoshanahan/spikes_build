@@ -9,20 +9,13 @@ env.repositories = [
 ]
 
 @task
-def git_clone():
+def get_git_resources():
     """
-    Clone resources
+    Grab any tools needed from the repository
     """
-    for repository in env.repositories:
-        with warn_only():
+    with warn_only():
+        for repository in env.repositories:
             local('git clone {0} {1}'.format(repository[0], repository[1]))
+            with lcd(repository[1]):
+                local('git pull')
 
-
-@task
-def git_pull():
-    """
-    Pull resources
-    """
-    for repository in env.repositories:
-        with lcd(repository[1]):
-            local('git pull')

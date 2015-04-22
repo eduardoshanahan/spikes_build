@@ -1,0 +1,40 @@
+require 'yaml'
+
+current_dir = File.dirname(File.expand_path(__FILE__))
+vagrant_config = YAML.load_file("#{current_dir}/vagrant_config.yaml")
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "ubuntu/trusty64"
+    config.vm.box_url = "ubuntu/trusty64"
+
+    config.vm.define vagrant_config['build']['name'] do |build|
+        build.vm.hostname = vagrant_config['build']['name']
+        build.vm.network "private_network", ip: vagrant_config['build']['ip']
+        build.vm.network :forwarded_port, guest: 22, host: vagrant_config['build']['ssh_port'], id: "ssh"
+        # build.vm.synced_folder ".", "/home/vagrant/code"
+        build.vm.provider :virtualbox do |vb|
+            vb.name = vagrant_config['build']['name']
+            vb.customize ["modifyvm", :id, "--memory", vagrant_config['build']['memory']]
+        end
+        build.vm.provision :fabric do |fabric|
+            fabric.fabfile_path = "./fabfile.py"
+            fabric.tasks = ["prepare_machine"]
+        end
+    end
+
+    config.vm.define vagrant_config['production']['name'] do |production|
+        production.vm.hostname = vagrant_config['production']['name']
+        production.vm.network "private_network", ip: vagrant_config['production']['ip']
+        production.vm.network :forwarded_port, guest: 22, host: vagrant_config['production']['ssh_port'], id: "ssh"
+        # production.vm.synced_folder ".", "/home/vagrant/code"
+        production.vm.provider :virtualbox do |vb|
+            vb.name = vagrant_config['production']['name']
+            vb.customize ["modifyvm", :id, "--memory", vagrant_config['production']['memory']]
+        end
+        production.vm.provision :fabric do |fabric|
+            fabric.fabfile_path = "./fabfile.py"
+            fabric.tasks = ["prepare_machine"]
+        end
+    end
+
+end
